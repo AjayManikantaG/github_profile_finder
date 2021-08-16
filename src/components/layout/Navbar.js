@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
   static defaultProps = {
-    title: 'Github Finder',
+    title: 'Github User Finder',
     icon: 'fab fa-github',
   };
 

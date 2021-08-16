@@ -1,50 +1,45 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-class Search extends Component {
-  state = {
-    text: '',
-  };
+const Search = (props) => {
+  const [text, setText] = useState('');
 
-  changeText = (event) => this.setState({ text: event.target.value });
-  submitForm = (event) => {
+  const changeText = (event) => setText(event.target.value);
+  const submitForm = (event) => {
     event.preventDefault();
 
-    if (this.state.text) {
-      console.log(this.props);
-      this.props.searchUsers(this.state.text);
-      this.setState({ text: '' });
+    if (text) {
+      props.searchUsers(text);
+      setText('');
     } else {
       alert('Please enter some text...');
     }
   };
 
-  render() {
-    return (
-      <div>
-        <form className='form' onSubmit={(event) => this.submitForm(event)}>
-          <input
-            type='text'
-            name='text'
-            placeholder='Search users...'
-            value={this.state.text}
-            onChange={(event) => this.changeText(event)}
-          />
-          <input
-            type='submit'
-            value='search'
-            className='btn btn-dark btn-block'
-          />
-        </form>
-        <button
-          className='btn btn-light btn-block'
-          onClick={this.props.clearUsers}
-          style={!this.props.showClear ? { display: 'none' } : null}
-        >
-          Clear
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <form className='form' onSubmit={(event) => submitForm(event)}>
+        <input
+          type='text'
+          name='text'
+          placeholder='Search users...'
+          value={text}
+          onChange={(event) => changeText(event)}
+        />
+        <input
+          type='submit'
+          value='search'
+          className='btn btn-dark btn-block'
+        />
+      </form>
+      <button
+        className='btn btn-light btn-block'
+        onClick={props.clearUsers}
+        style={!props.showClear ? { display: 'none' } : null}
+      >
+        Clear
+      </button>
+    </div>
+  );
+};
 
 export default Search;
