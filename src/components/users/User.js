@@ -1,12 +1,16 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 import Repo from '../repos/Repo';
+import GithubContext from '../../context/github/GithubContext';
 
 const User = (props) => {
+  const githubContext = useContext(GithubContext);
+  const { getUser, getUserRepos, loading, user, repos } = githubContext;
+
   useEffect(() => {
-    props.getUser(props.match.params.login);
-    props.getUserRepos(props.match.params.login);
+    getUser(props.match.params.login);
+    getUserRepos(props.match.params.login);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -24,10 +28,7 @@ const User = (props) => {
     public_repos,
     public_gists,
     hireable,
-  } = props.user;
-  console.log(name);
-
-  const { loading } = props;
+  } = user;
 
   if (loading) return <Spinner />;
 
@@ -78,7 +79,7 @@ const User = (props) => {
       </div>
       <div>
         <h3>My Top Repos</h3>
-        <Repo repos={props.repos} />
+        <Repo repos={repos} />
       </div>
     </Fragment>
   );

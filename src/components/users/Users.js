@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import UserItem from './UserItem';
 import Spinner from '../layout/Spinner';
+import GithubContext from '../../context/github/GithubContext';
 
-function Users(props) {
-  if (props.loading === true) {
+function Users() {
+  const githubContext = useContext(GithubContext);
+  const { users, loading } = githubContext;
+
+  if (loading === true) {
     return <Spinner />;
   }
 
   return (
     <div style={userStyle}>
-      {props.users.map((item) => {
+      {users.map((item) => {
         return <UserItem key={item.id} users={item} />;
       })}
     </div>
